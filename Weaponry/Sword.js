@@ -1,5 +1,5 @@
-// Sword Script by SmartLion
-// Credit not required
+// Sword Script by SmartLion (forked by "The Windows 10")
+// Credits: Smartlion
 // SemVer 1.0.1
 
 
@@ -9,11 +9,11 @@ swordDamage = 10 // How much damage does the sword deal when clicked?
 swordRange = 8 // How far can the sword hit players?
 swordModelID = 2930 // The mesh of the sword from the store ID
 
-effectsEnabled = true // Enable or disable particles effects? Note: This will disable all related settings (Disable if your server crashes or lags when this is enabled)
+effectsEnabled = false // Enable or disable particles effects? Note: This will disable all related settings (Disable if your server crashes or lags when this is enabled)
     particleSize = new Vector3(0.5,0.5,0.5) // The size of the particles
     hitParticles = true // If true then particles will emit from damaged players
-    redBlood = false // If false then particles will be a random color
-    deathExplosion = true // When the player dies they make a big brick explosion
+    redBlood = true // If false then particles will be a random color
+    deathExplosion = false // When the player dies they make a big brick explosion
 
 legacyBug = false // Enable the "player can still kill players if dead" bug
 // Settings \\
@@ -38,15 +38,15 @@ tool.on("activated", (attacker) => {
                     player.setHealth(player.health - swordDamage) // Damage the player
                     if (effectsEnabled == true && hitParticles == true) {
                         damagecolor = 0
-                        if (redBlood == false) {
-                            damagecolor = randomColor()
+                        if (redBlood == true) {
+                            damagecolor = redColor()
                         } else {
                             damagecolor = "ff0000"
                         }
                         playerexplode(player,damagecolor) 
                     }
                     if (player.alive == false) { // Was the player killed? Award the killer with a point
-                    Game.messageAll(`\\c6${attacker.username} killed ${player.username}`)
+                    Game.messageAll(`\\c6${attacker.username} killed ${player.username}`) // Put username in quotes "" if it has spaces.
                     attacker.setScore(attacker.score += 1)
                     }
                 }
